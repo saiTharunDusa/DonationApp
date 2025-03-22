@@ -17,7 +17,7 @@ const Search = props => {
 
   const handleSearch = searchValue => {
     setSearch(searchValue);
-    props.onSearch(searchValue);
+    // props.onSearch(searchValue);
   };
   return (
     <Pressable style={style.searchInputContainer} onPress={handleFocus}>
@@ -27,6 +27,7 @@ const Search = props => {
         size={scaleFontSize(22)}
       />
       <TextInput
+      placeholder='Search'
         ref={textInputRef}
         style={style.searchInput}
         value={search}

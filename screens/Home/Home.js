@@ -1,4 +1,4 @@
-import {Alert, React} from "react-native";
+import {Alert, Image, React} from "react-native";
 import { SafeAreaView, View, Text } from "react-native";
 import globalStyle from "../../assets/styles/globalStyle";
 import Header from "../../components/Header/Header";
@@ -8,47 +8,50 @@ import Badge from '../../components/Badge/Badge';
 import Search from "../../components/Search/Search";
 import SingleDonationItem from "../../components/SingleDonationItem/SingleDonationItem";
 import { horizontalScale } from "../../assets/Scaling";
+import Style from "./Style";
+import { useSelector } from "react-redux";
+import store from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { updateFirstName } from "../../redux/reducers/user";
 
 
 const Home = () => {
+    const dispatch = useDispatch();
+    dispatch(updateFirstName({firstName : "Sai Charan"}));
+    const user = useSelector((store) => store.user);
     return(
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
-        <Header title = {'Tharun'} type = {1} />
-        <Button title={'Donate'} onPress={() => {
-          console.log('You just pressed me!');
-        }} />
-       <Button title={'Donate'} isDisabled={true} />
-       <Tab title={'Highlight'} />
-       <Tab title={'Highlight'} isInactive={true} />
-       <Badge title={'Environment'}/>
-       <Search onSearch={
-        value => {
-          console.log(value);
-        }
-       } />
-       <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: horizontalScale(24),
-        }}>
-        <SingleDonationItem
-          uri={
-            'https://img.pixers.pics/pho_wat(s3:700/FO/44/24/64/31/700_FO44246431_ab024cd8251bff09ce9ae6ecd05ec4a8.jpg,525,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,305,650,jpg)/stickers-cactus-cartoon-illustration.jpg.jpg'
-          }
-          badgeTitle={'Environment'}
-          donationTitle={'Tree Cactus'}
-          price={44}
-        />
-        <SingleDonationItem
-          uri={
-            'https://img.pixers.pics/pho_wat(s3:700/FO/44/24/64/31/700_FO44246431_ab024cd8251bff09ce9ae6ecd05ec4a8.jpg,525,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,305,650,jpg)/stickers-cactus-cartoon-illustration.jpg.jpg'
-          }
-          badgeTitle={'Environment'}
-          donationTitle={'Tree Cactus'}
-          price={44}
-        />
-      </View>
+        {/**
+            Title Component.
+         */}
+        <View style={Style.headerContainer}> 
+            <View>
+                <Text style={Style.textHello}>
+                    Hello, 
+                </Text>
+                <View style={Style.titleStyle}>
+                    <Header title = {user.firstName + ' ' + user.lastName[0] + '.👋'} type = {1} />
+                </View>
+            </View>
+            <View style={{width : 50, height : 50, marginRight : 18}}>
+            <Image source={require('../../assets/icon.png')}/>
+            </View>
+        </View>
+
+        {/**
+            Search Box Component.
+        */}
+        <View style = {Style.searchBox}>
+            <Search />
+        </View>
+        
+        {/**
+            Image for advertisement.
+        */}
+        <View>
+            <Image source={require('../../assets/highlighted_image.png')} style={Style.imageContainer} />
+        </View>
+       
     </SafeAreaView>
     )
 }
