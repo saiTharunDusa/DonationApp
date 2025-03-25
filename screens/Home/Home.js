@@ -1,5 +1,5 @@
 import {Alert, Image} from "react-native";
-import { SafeAreaView, View, Text, ScrollView } from "react-native";
+import { SafeAreaView, View, Text, ScrollView, Pressable } from "react-native";
 import globalStyle from "../../assets/styles/globalStyle";
 import Header from "../../components/Header/Header";
 import Button from "../../components/Button/Button";
@@ -18,7 +18,8 @@ import { updateSelectedCategory } from "../../redux/reducers/categories";
 import { React, useEffect, useState } from "react";
 import { updateSelectedDonationId } from "../../redux/reducers/donationItems";
 import { Routes } from "../../navigation/Routes";
-
+import auth from "@react-native-firebase/auth";
+import { logOut } from "../../api/createUser";
 
 const Home = ({navigation}) => {
     const dispatch = useDispatch();
@@ -33,6 +34,12 @@ const Home = ({navigation}) => {
     const pageSize = 4;
 
     const [donationItemsList, setDonationItemsList] = useState([]);
+    const [userName, setUserName] = useState('');
+
+
+    useEffect(()=>{
+        setUserName(auth().currentUser._user.displayName)
+    }, [])
 
     useEffect(()=>{
         const items = donationItems.items.filter((value) => value.categoryIds.includes(categories.selectedCategoryId));
@@ -70,11 +77,18 @@ const Home = ({navigation}) => {
                     Hello, 
                 </Text>
                 <View style={Style.titleStyle}>
-                    <Header title = {user.firstName + ' ' + user.lastName[0] + '.👋'} type = {1} />
+                    <Header title = {user.displayName + '.👋'} type = {1} />
                 </View>
             </View>
             <View style={{width : 50, height : 50, marginRight : 18}}>
                 <Image source={require('../../assets/icon.png')}/>
+                <Pressable
+              onPress={async () => {
+                dispatch(resetToInitialState());
+                await logOut();
+              }}>
+              <Header type={3} title={'Logout'} color={'#156CF7'} />
+            </Pressable>
             </View>
         </View>
 
@@ -90,6 +104,7 @@ const Home = ({navigation}) => {
         */}
         <View>
             <Image source={require('../../assets/highlighted_image.png')} style={Style.imageContainer} />
+            
         </View>
 
         <Text style={{color : "#000000"}}>
