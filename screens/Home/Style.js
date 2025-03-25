@@ -28,12 +28,33 @@ const Style = StyleSheet.create({
 
     },
     imageContainer : {
-        marginHorizontal: horizontalScale(11),
+        marginHorizontal: horizontalScale(20),
         marginVertical : verticalScale(20),
         borderRadius : 30,
-        width : horizontalScale(325),
+        width : horizontalScale(310),
         height : verticalScale(160)
-    }
+    },
+    tabContainer : {
+        marginLeft : horizontalScale(20),
+        marginTop : verticalScale(10),
+    },
+    tabItem : {
+        marginRight : horizontalScale(10)
+    },
+    headerCategory : {
+        marginHorizontal : horizontalScale(24),
+    },
+    donationItemsContainer: {
+        marginTop: verticalScale(20),
+        marginHorizontal: horizontalScale(24),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+      },
+      singleDonationItem : {
+        maxWidth: '49%',
+        marginBottom: verticalScale(23),
+      }
 })
 
 export default Style;
